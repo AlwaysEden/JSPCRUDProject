@@ -41,6 +41,24 @@ public class BoardDAO {
 		return 0;
 	}
 
+	public String getPhotoFilename(int seq){
+		String filename = null;
+		try{
+			conn = JDBCUtil.getConnection();
+			stmt = conn.prepareStatement(BOARD_GET);
+			stmt.setInt(1,seq);
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				filename = rs.getString("attachment");
+			}
+			rs.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		System.out.println("====> JDBC로 getPhotoFilename() 기능 처리");
+		return filename;
+	}
+
 	// 글 삭제
 	public void deleteBoard(BoardVO vo) {
 		System.out.println("===> JDBC로 deleteBoard() 기능 처리");
